@@ -38,24 +38,24 @@ This API manages a book library system that includes user accounts, book managem
 
 #### 3.2.1 `AccountController.cs`
 - **Endpoints**:  
-  - `POST /api/account/register` *(Authorization: [AllowAnonymous])*  
+  - `POST /api/account/register` *(Authorization: `AllowAnonymous`)*  
     Creates a new user account with role assignment.  
-  - `POST /api/account/login` *(Authorization: [AllowAnonymous])*  
+  - `POST /api/account/login` *(Authorization: `AllowAnonymous`)*  
     Authenticates user credentials, returns JWT or token on success.
 - **Logic**:  
   - Uses Identity services to handle user creation, password hashing, token generation via configured sign-in manager.
 
 #### 3.2.2 `BookController.cs`
 - **Endpoints**:  
-  - `GET /api/books` *(Authorization: [Authorize(Roles = "Admin,User")])*  
+  - `GET /api/books` *(Authorization: `Admin`, `User`)*  
     Retrieves a list of all books.  
-  - `GET /api/books/{id}` *(Authorization: [Authorize(Roles = "Admin,User")])*  
+  - `GET /api/books/{id}` *(Authorization: `Admin`, `User`)*
     Retrieves details of a specific book by ID.  
-  - `POST /api/books` *(Authorization: [Authorize(Roles = "Admin")])*  
+  - `POST /api/books` *(Authorization: `Admin`)*  
     Creates a new book (requires admin or privileged role).  
-  - `PUT /api/books/{id}` *(Authorization: [Authorize(Roles = "Admin")])*  
+  - `PUT /api/books/{id}` *(Authorization: `Admin`)*  
     Updates an existing book’s info.  
-  - `DELETE /api/books/{id}` *(Authorization: [Authorize(Roles = "Admin")])*  
+  - `DELETE /api/books/{id}` *(Authorization: `Admin`)*  
     Removes a book from the system.
 - **Logic**:  
   - Relies on `GenericRepository<Book>` for underlying CRUD.
@@ -63,11 +63,11 @@ This API manages a book library system that includes user accounts, book managem
 
 #### 3.2.3 `BorrowedBookController.cs`
 - **Endpoints**:  
-  - `POST /api/borrow/{bookId}` *(Authorization: [Authorize(Roles = "User")])*  
+  - `POST /api/borrow/{bookId}` *(Authorization: `User`)*
     Creates a borrowed record for a user checking out a book.  
-  - `POST /api/borrow/return/{bookId}` *(Authorization: [Authorize(Roles = "User")])*  
+  - `POST /api/borrow/return/{bookId}` *(Authorization: `User`)*  
     Marks a borrowed book as returned.  
-  - `GET /api/borrow` *(Authorization: [Authorize(Roles = "User")])*  
+  - `GET /api/borrow` *(Authorization: `User`)*  
     Lists all borrowed books for a user.
 - **Logic**:  
   - Uses `GenericRepository<BorrowedBook>` for simple data operations.
@@ -75,12 +75,12 @@ This API manages a book library system that includes user accounts, book managem
 
 #### 3.2.4 `NotificationController.cs`
 - **Endpoints**:  
-  - `POST /api/notification/notify-overdue` *(Authorization: [Authorize(Roles = "Admin")])*  
+  - `POST /api/notification/notify-overdue` *(Authorization: `Admin`)*  
     Sends a notification message (often via email) to a user which has borrowed at least one book more than 14 days ago and did not return it yet.
 - **Logic**:  
   - Leverages `IEmailService` (implemented in `EmailService`) to send emails.
   - Stores notifications if needed for logging or retrieval.
-  
+
 ### 3.3 Repositories & Services
 
 - **`GenericRepository<T>`**  
