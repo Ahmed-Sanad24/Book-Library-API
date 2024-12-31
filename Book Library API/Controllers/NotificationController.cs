@@ -47,7 +47,7 @@ namespace Bill_system_API.Controllers
                     {
                         // Connect to Gmail's SMTP server on port 465 for SSL
                         client.Connect("smtp.gmail.com", 465, true);  // 'true' for SSL connection
-                        client.Authenticate("identity.server.2022@gmail.com", "ntfrxyobisplkspl");  // Authenticate using your email and password
+                        client.Authenticate("identity.server.2022@gmail.com", "password-for-account");  // Authenticate using your email and password
                         client.Send(message);  // Send the email
                         client.Disconnect(true);  // Disconnect after sending the email
                     }
